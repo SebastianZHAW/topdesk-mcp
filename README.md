@@ -2,17 +2,6 @@
 
 This project is a Model Context Protocol (MCP) server implemented in Python. It exposes the Topdesk API via the TOPdeskPy SDK.
 
-> **Fork notice:** This is a fork of [dbsanfte/topdesk-mcp](https://github.com/dbsanfte/topdesk-mcp) (0.8.1) with two bug fixes that are pending upstream
-> ([#10](https://github.com/dbsanfte/topdesk-mcp/pull/10), [#11](https://github.com/dbsanfte/topdesk-mcp/pull/11)):
-> incident queries no longer fail with `Bad Request` (unsupported `archived` filter), and paginated (HTTP 206) results are no longer returned empty.
-> It is versioned `0.8.1.post1`. Install it directly from GitHub instead of PyPI:
->
-> ```bash
-> uvx --from git+https://github.com/SebastianZHAW/topdesk-mcp topdesk-mcp
-> # or into an existing environment
-> pip install git+https://github.com/SebastianZHAW/topdesk-mcp
-> ```
-
 ## Project Purpose
 - Acts as an MCP server to bridge MCP clients with the Topdesk API.
 - Uses the [TOPdeskPy SDK](https://github.com/TwinkelToe/TOPdeskPy) (with some modifications) for all Topdesk API interactions.
