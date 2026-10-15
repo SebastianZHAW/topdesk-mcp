@@ -2,10 +2,12 @@
 
 This project is a Model Context Protocol (MCP) server implemented in Python. It exposes the Topdesk API via the TOPdeskPy SDK.
 
-> **Fork notice:** This is a fork of [dbsanfte/topdesk-mcp](https://github.com/dbsanfte/topdesk-mcp) (0.8.1) with two bug fixes that are pending upstream
-> ([#10](https://github.com/dbsanfte/topdesk-mcp/pull/10), [#11](https://github.com/dbsanfte/topdesk-mcp/pull/11)):
-> incident queries no longer fail with `Bad Request` (unsupported `archived` filter), and paginated (HTTP 206) results are no longer returned empty.
-> It is versioned `0.8.1.post1`. Install it directly from GitHub instead of PyPI:
+> **Fork notice:** This is a fork of [dbsanfte/topdesk-mcp](https://github.com/dbsanfte/topdesk-mcp) (0.8.1) with fixes that are not yet released upstream:
+> - incident queries no longer fail with `Bad Request` (unsupported `archived` filter), [#10](https://github.com/dbsanfte/topdesk-mcp/pull/10), pending
+> - paginated (HTTP 206) results are no longer returned empty, [#11](https://github.com/dbsanfte/topdesk-mcp/pull/11), merged upstream, not yet on PyPI
+> - the FIQL incident search returns one page per call with compact fields, so results stay below the tool result limit, [#12](https://github.com/dbsanfte/topdesk-mcp/pull/12), pending
+>
+> It is versioned `0.8.1.post2`. Install it directly from GitHub instead of PyPI:
 >
 > ```bash
 > uvx --from git+https://github.com/SebastianZHAW/topdesk-mcp topdesk-mcp
