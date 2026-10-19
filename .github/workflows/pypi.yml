@@ -1,6 +1,11 @@
+name: Publish to PyPI
+
 on:
-  release:
-    types: [created]
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
 
 jobs:
   deploy:
@@ -11,6 +16,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        persist-credentials: false
 
     - name: Set up Python
       uses: actions/setup-python@v5
@@ -20,39 +27,41 @@ jobs:
         cache-dependency-path: '**/pyproject.toml'
         
     - name: Build
+      id: build
       run: |
         pip install uv
         uv venv
         uv pip install setuptools wheel build
-        uv version ${{ github.event.release.tag_name }}
+        version=$(python - <<'PY'
+        import os
+        import tomllib
+
+        with open("pyproject.toml", "rb") as project_file:
+            version = tomllib.load(project_file)["project"]["version"]
+        major, minor, patch = map(int, version.split("."))
+        print(f"{major}.{minor}.{patch + int(os.environ['GITHUB_RUN_NUMBER'])}")
+        PY
+        )
+        uv version "$version"
         uv build
+        echo "version=$version" >> "$GITHUB_OUTPUT"
 
     - name: Publish
       uses: pypa/gh-action-pypi-publish@release/v1
-
-      # We will now commit the version bump to the master branch  
-    - name: Configure Git User for Stash
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-    - name: Stash pyproject.toml changes
-      run: |
-        git add pyproject.toml
-        git stash
-
-    - name: Checkout master branch
-      uses: actions/checkout@v4
       with:
-        ref: master # Explicitly checkout the master branch
+        skip-existing: true
 
-    - name: Pop stashed pyproject.toml changes
-      run: git stash pop
-      # This applies the stashed version bump to pyproject.toml on the master branch.
-
-    - name: Commit and push pyproject.toml to master
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        commit_message: "Bump version in pyproject.toml to ${{ github.event.release.tag_name }}"
-        file_pattern: pyproject.toml # Ensures only pyproject.toml is committed.
-        # Default commit user is github-actions[bot], which is fine.
+    - name: Create GitHub release
+      env:
+        GH_TOKEN: ${{ github.token }}
+        GH_REPO: ${{ github.repository }}
+        RELEASE_TAG: v${{ steps.build.outputs.version }}
+      run: |
+        if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+          echo "Release $RELEASE_TAG already exists."
+        else
+          gh release create "$RELEASE_TAG" \
+            --target "$GITHUB_SHA" \
+            --title "$RELEASE_TAG" \
+            --generate-notes
+        fi
