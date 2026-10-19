@@ -2,13 +2,11 @@
 
 This project is a Model Context Protocol (MCP) server implemented in Python. It exposes the Topdesk API via the TOPdeskPy SDK.
 
-> **Fork notice:** This is a fork of [dbsanfte/topdesk-mcp](https://github.com/dbsanfte/topdesk-mcp) (0.8.1) with these fixes, some of them not yet released upstream:
-> - incident queries no longer fail with `Bad Request` (unsupported `archived` filter), [#10](https://github.com/dbsanfte/topdesk-mcp/pull/10), released upstream in 0.8.20
-> - paginated (HTTP 206) results are no longer returned empty, [#11](https://github.com/dbsanfte/topdesk-mcp/pull/11), released upstream in 0.8.20
-> - the FIQL incident search returns one page per call with compact fields, so results stay below the tool result limit, [#12](https://github.com/dbsanfte/topdesk-mcp/pull/12), pending
+> **Fork notice:** This is a fork of [dbsanfte/topdesk-mcp](https://github.com/dbsanfte/topdesk-mcp), based on upstream **0.8.20** (which already contains [#10](https://github.com/dbsanfte/topdesk-mcp/pull/10), [#11](https://github.com/dbsanfte/topdesk-mcp/pull/11) and [#14](https://github.com/dbsanfte/topdesk-mcp/pull/14)), plus fixes that are not yet released upstream:
+> - the FIQL incident search returns one page per call with compact fields, and a page stays within 500,000 bytes of UTF-8 JSON, so results stay below the tool result limit, [#12](https://github.com/dbsanfte/topdesk-mcp/pull/12), pending
 > - incidents without attachments no longer make the attachment tools and the incident overview fail, [#16](https://github.com/dbsanfte/topdesk-mcp/pull/16), pending
 >
-> It is versioned `0.8.1.post3`. Install it directly from GitHub instead of PyPI:
+> It is versioned `0.8.20.post1`. The PyPI publishing workflow is disabled in this fork. Install it directly from GitHub instead of PyPI:
 >
 > ```bash
 > uvx --from git+https://github.com/SebastianZHAW/topdesk-mcp topdesk-mcp
