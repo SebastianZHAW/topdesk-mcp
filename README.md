@@ -5,6 +5,7 @@ This project is a Model Context Protocol (MCP) server implemented in Python. It 
 > **Fork notice:** This is a fork of [dbsanfte/topdesk-mcp](https://github.com/dbsanfte/topdesk-mcp), based on upstream **0.8.20** (which already contains [#10](https://github.com/dbsanfte/topdesk-mcp/pull/10), [#11](https://github.com/dbsanfte/topdesk-mcp/pull/11) and [#14](https://github.com/dbsanfte/topdesk-mcp/pull/14)), plus fixes that are not yet released upstream:
 > - the FIQL incident search returns one page per call with compact fields, and a page stays within 500,000 bytes of UTF-8 JSON, so results stay below the tool result limit, [#12](https://github.com/dbsanfte/topdesk-mcp/pull/12), pending
 > - incidents without attachments no longer make the attachment tools and the incident overview fail, [#16](https://github.com/dbsanfte/topdesk-mcp/pull/16), pending
+> - read-only access to knowledge items through the Knowledge Base API: `topdesk_search_knowledge_items` and `topdesk_get_knowledge_item` (fork only)
 >
 > It is versioned `0.8.20.post1`. The PyPI publishing workflow is disabled in this fork. Install it directly from GitHub instead of PyPI:
 >
@@ -209,6 +210,12 @@ topdesk_mcp/  # Directory for the MCP server package
 
 - **topdesk_unarchive_person**  
   Unarchive a TOPdesk person.
+
+- **topdesk_search_knowledge_items**  
+  Search knowledge items, one page per call. `search_text` matches words in title, description and keywords; the Knowledge Base API cannot filter on these fields, so the server loads them for all knowledge items and filters locally (cached for 5 minutes). `query` adds a FIQL filter on other fields.
+
+- **topdesk_get_knowledge_item**  
+  Get a knowledge item by UUID or number (e.g. `KI 0908`), including its content and comments for operators, optionally in a given language.
 
 ## References
 - [MCP Protocol Documentation](https://modelcontextprotocol.io/llms-full.txt)
