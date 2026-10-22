@@ -7,7 +7,7 @@ This project is a Model Context Protocol (MCP) server implemented in Python. It 
 > - incidents without attachments no longer make the attachment tools and the incident overview fail, [#16](https://github.com/dbsanfte/topdesk-mcp/pull/16), pending
 > - read-only access to knowledge items through the Knowledge Base API: `topdesk_search_knowledge_items` and `topdesk_get_knowledge_item` (fork only)
 >
-> It is versioned `0.8.20.post1`. The PyPI publishing workflow is disabled in this fork. Install it directly from GitHub instead of PyPI:
+> It is versioned `0.8.20.post2`. The PyPI publishing workflow is disabled in this fork. Install it directly from GitHub instead of PyPI:
 >
 > ```bash
 > uvx --from git+https://github.com/SebastianZHAW/topdesk-mcp topdesk-mcp
