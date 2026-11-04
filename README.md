@@ -2,6 +2,16 @@
 
 This project is a Model Context Protocol (MCP) server implemented in Python. It exposes the Topdesk API via the TOPdeskPy SDK.
 
+> **Fork notice:** This is a fork of [dbsanfte/topdesk-mcp](https://github.com/dbsanfte/topdesk-mcp), based on upstream **0.8.22**, plus read-only access to knowledge items through the Knowledge Base API: `topdesk_search_knowledge_items` and `topdesk_get_knowledge_item` (fork only).
+>
+> It is versioned `0.8.22.post1`. The PyPI publishing workflow is disabled in this fork. Install it directly from GitHub instead of PyPI:
+>
+> ```bash
+> uvx --from git+https://github.com/SebastianZHAW/topdesk-mcp topdesk-mcp
+> # or into an existing environment
+> pip install git+https://github.com/SebastianZHAW/topdesk-mcp
+> ```
+
 ## Project Purpose
 - Acts as an MCP server to bridge MCP clients with the Topdesk API.
 - Uses the [TOPdeskPy SDK](https://github.com/TwinkelToe/TOPdeskPy) (with some modifications) for all Topdesk API interactions.
